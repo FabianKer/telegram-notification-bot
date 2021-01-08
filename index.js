@@ -12,20 +12,14 @@ const telegramBotInfo = {
 //create cronJob which checks every hour
 const job = new CronJob('* * */1 * * *', function() {
 
-    checkAvailability()
+    console.log('Running CronJob...')
+    gpu_checker.checkAvailability()
 
 })
 
 
 sendTelegramMessage('Starting to check for GPUs')
-runServices()
 job.start()
-
-
-
-function runServices() {
-    gpu_checker.checkAvailability()
-}
 
 function sendTelegramMessage(message) {
     message = encodeURIComponent(message.trim())
