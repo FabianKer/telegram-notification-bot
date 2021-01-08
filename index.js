@@ -1,4 +1,6 @@
 const request = require('request')
+const CronJob = require('cron').CronJob
+
 const gpu_checker = require('./services/gpu_check')
 
 //Information needed by the telegram bot
@@ -7,9 +9,19 @@ const telegramBotInfo = {
     chatId: '415412975'
 }
 
+//create cronJob which checks every hour
+const job = new CronJob('* * */1 * * *', function() {
+
+    checkAvailability()
+
+})
+
+
 sendTelegramMessage('Starting to check for GPUs')
 runServices()
 job.start()
+
+
 
 function runServices() {
     gpu_checker.checkAvailability()
