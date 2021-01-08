@@ -1,3 +1,0 @@
-GET https://api.nvidia.partners/edge/product/search?page=1&limit=9&locale=de-de&gpu=RTX%203070
-
-GET https://api.nvidia.partners/edge/product/search?page=1&limit=9&locale=de-de
