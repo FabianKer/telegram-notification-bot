@@ -9,7 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "cron": "^1.8.2",
     "node-windows": "^1.0.0-beta.5",
     "request": "^2.88.2"
   }

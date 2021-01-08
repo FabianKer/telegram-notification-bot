@@ -1,5 +1,4 @@
 const request = require('request')
-const CronJob = require('cron').CronJob
 
 const gpu_checker = require('./services/gpu_check')
 
@@ -9,17 +8,16 @@ const telegramBotInfo = {
     chatId: '415412975'
 }
 
-//create cronJob which checks every hour
-const job = new CronJob('* * */1 * * *', function() {
-
-    console.log('Running CronJob...')
-    gpu_checker.checkAvailability()
-
-})
-
 
 sendTelegramMessage('Starting to check for GPUs')
-job.start()
+
+//set interval
+setInterval(function() {
+
+    console.log('Running Interval...')
+    gpu_checker.checkAvailability()
+
+}, 3600000)
 
 function sendTelegramMessage(message) {
     message = encodeURIComponent(message.trim())
