@@ -14,7 +14,9 @@ sendTelegramMessage('Starting to check for GPUs')
 //set interval
 setInterval(function() {
 
-    console.log('Running Interval...')
+    const currentDate = new Date()
+    const currentTime = currentDate.getHours() + ':' + currentDate.getMinutes()
+    console.log('[' + currentTime + '] Running Interval...')
     gpu_checker.checkAvailability()
 
 }, 3600000)
