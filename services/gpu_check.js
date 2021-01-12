@@ -1,61 +1,50 @@
 const request = require('request')
+const config = require('../config')
+const telegram_bot = require('./telegram_bot')
 
 exports.checkAvailability = checkAvailability
 
 function checkAvailability() {
-    request('https://api.nvidia.partners/edge/product/search?page=1&limit=9&locale=de-de', { json: true }, (err, res, data) => {
+    request(config.nvidiaApiPath, { json: true }, (err, res, data) => {
         if (err) { return console.error(err) }
+        console.log(data)
 
-        data3080 = data.searchedProducts.productDetails.filter(item => {
-            return item.gpu === 'RTX 3080'
-        })
-        data3070 = data.searchedProducts.productDetails.filter(item => {
-            return item.gpu === 'RTX 3070'
-        })
-        data3060 = data.searchedProducts.productDetails.filter(item => {
-            return item.gpu === 'RTX 3060 Ti'
-        })
+        // Go through all interesting GPUs
+        config.interests.forEach(interest => {
 
-        //check for RTX 3080
-        if (data3080.length > 0) {
-            const status = data3080[0].prdStatus
-            console.info('Availability (RTX 3080): ' + status)
-
-            if (status !== 'out_of_stock') {
-                sendTelegramMessage('tobias', 'RTX 3080 ist wieder verfügbar!')
+            console.log('Checking for ' + interest.gpu)
+            // Filter out information for searched gpu
+            let gpuData = {}
+            // If GPU is featured, it's in a different Object
+            if (data.searchedProducts.featuredProduct.gpu === interest.gpu) {
+                Object.assign(gpuData, data.searchedProducts.featuredProduct)
+            } else {
+                data.searchedProducts.productDetails.forEach(details => {
+                    if (details.gpu === interest.gpu) {
+                        gpuData = details
+                    }
+                })
             }
 
-        } else {
-            console.info('The GPU was not found')
-        }
-        
-        //check for RTX 3070
-        if (data3070.length > 0) {
-            const status = data3070[0].prdStatus
-            console.info('Availability (RTX 3070): ' + status)
+            // If GPU was found
+            if (gpuData) {
+                const status = gpuData.prdStatus;
+                console.info('[Info] Availability ('+interest.gpu+'): '+status)
 
-            if (status !== 'out_of_stock') {
-                sendTelegramMessage('fabian', 'RTX 3070 ist wieder verfügbar!')
+                // If GPU is back in stock
+                if (status !== 'out_of_stock') {
+                    interest.interestedUsers.forEach(user => {
+                        const receiver = config.users[user].telegramChatId
+                        const message = interest.gpu + ' ist wieder verfügbar!'
+                        telegram_bot.sendTelegramSticker(receiver, config.telegramBot.stickers.found)
+                        setTimeout(() => { telegram_bot.sendTelegramMessage(receiver, message) }, 1000)
+                    })
+                }
+            } else {
+                console.warn('[Warning] GPU "'+interest.gpu+'" was not found')
             }
 
-        } else {
-            console.info('The GPU was not found')
-        }
-
-        //Check for RTX 3060 Ti
-        if (data3060.length > 0) {
-            const status = data3060[0].prdStatus
-            console.info('Availability (RTX 3060 Ti): ' + status)
-
-            if (status !== 'out_of_stock') {
-                sendTelegramMessage('fabian', 'RTX 3060 Ti ist wieder verfügbar!')
-            }
-
-        } else {
-            console.info('The GPU  was not found')
-        }
-
-
+        })
 
     })
 }
