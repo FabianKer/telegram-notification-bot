@@ -27,7 +27,7 @@ setInterval(function() {
 
 function sendTelegramMessage(receiver, message) {
     message = encodeURIComponent(message.trim())
-    request(`https://api.telegram.org/bot${telegramBotInfo.accessToken}/sendMessage?chat_id=${telegramBotInfo.chatId[$receiver]}&text=${message}`, { json: true }, (err, res, body) => {
+    request(`https://api.telegram.org/bot${telegramBotInfo.accessToken}/sendMessage?chat_id=${telegramBotInfo.chatId[receiver]}&text=${message}`, { json: true }, (err, res, body) => {
         if (err) { return console.error(err) }
         console.log(body)
     })
