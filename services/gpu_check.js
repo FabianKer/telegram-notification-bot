@@ -12,12 +12,12 @@ function checkAvailability() {
     try {
         request(config.nvidiaApiPath, { json: true }, (err, res, data) => {
             if (err) { return console.error(err) }
-            console.log(data)
+            // console.log(data)
 
             // Go through all interesting GPUs
             config.interests.forEach(interest => {
 
-                console.log('Checking for ' + interest.gpu)
+                // console.log('Checking for ' + interest.gpu)
                 // Filter out information for searched gpu
                 let gpuData = {}
                 // If GPU is featured, it's in a different Object
