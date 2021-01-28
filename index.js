@@ -15,10 +15,11 @@ setInterval(function() {
     console.log('[' + currentTime + '] Running Interval...')
     gpu_checker.checkAvailability()
 
-}, 3600000)
+}, 600000)
 
 function sendStartupNotification() {
     config.interests.forEach(interest => {
+        gpu_checker.fillStatus(interest.gpu)
         interest.interestedUsers.forEach(user => {
 
             const receiver = config.users[user].telegramChatId
