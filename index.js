@@ -7,7 +7,7 @@ const telegram_bot = require('./services/telegram_bot')
 sendStartupNotification()
 setTimeout(() => { gpu_checker.checkAvailability() }, 2000)
 
-// Set interval hourly
+// Set interval every minute
 setInterval(function() {
 
     const currentDate = new Date()
@@ -15,7 +15,7 @@ setInterval(function() {
     console.log('[' + currentTime + '] Running Interval...')
     gpu_checker.checkAvailability()
 
-}, 600000)
+}, 60000)
 
 function sendStartupNotification() {
     config.interests.forEach(interest => {

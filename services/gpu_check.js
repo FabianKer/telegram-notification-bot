@@ -40,7 +40,7 @@ function checkAvailability() {
                     if  (gpuStatus[interest.gpu] !== '-' && gpuStatus[interest.gpu] !== status) {
                         interest.interestedUsers.forEach(user => {
                             const receiver = config.users[user].telegramChatId
-                            const message = 'Der Status von der ' + interest.gpu + ' hat zu \' ' + status + '\' gewechselt.'
+                            const message = 'Der Status von der ' + interest.gpu + ' hat zu \' ' + status + '\' gewechselt.\n' + interest.buy_link
                             telegram_bot.sendTelegramSticker(receiver, config.telegramBot.stickers.found)
                             setTimeout(() => { telegram_bot.sendTelegramMessage(receiver, message) }, 1000)
                         })
