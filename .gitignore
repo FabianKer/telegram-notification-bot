@@ -1,4 +1,4 @@
-check.http
 /node_modules
 /daemon
-config.js
+.env
+/services/**

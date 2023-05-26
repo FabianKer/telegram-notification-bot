@@ -1,16 +1,19 @@
 {
-  "name": "utility_bot",
-  "version": "3.0.1",
-  "description": "",
+  "name": "telegram-notification-bot",
+  "version": "4.0.0",
+  "description": "A universally usable notification script that checks the availability of certain products.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
   },
+  "type": "module",
   "author": "Fabian Kerzmann",
   "license": "ISC",
   "dependencies": {
-    "node-windows": "^1.0.0-beta.5",
-    "request": "^2.88.2"
+    "axios": "^1.4.0",
+    "cheerio": "^1.0.0-rc.12",
+    "dotenv": "^16.0.3",
+    "node-cron": "^3.0.2"
   }
 }
