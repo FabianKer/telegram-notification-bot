@@ -1,4 +1,4 @@
-# Univeral Telegram Notification Bot
+# Universal Telegram Notification Bot
 The idea of this project is, that whenever there is a website that does not feature a notify function for a sold out product, you can now create that function yourself with this script.
 
 
