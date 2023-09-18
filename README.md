@@ -46,7 +46,9 @@ export const service_info = {
 };
 
 async function check() {
-    const is_available = true;
+    const is_available = false;
+
+    // Perform your availability check
 
     return is_available;
 }
